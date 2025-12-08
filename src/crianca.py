@@ -5,7 +5,7 @@ class Crianca:
         self.idade = idade
 
     def getNome(self):
-        return None
+        return self.nome
 
     def getIdade(self):
-        return 99
+        return self.idade
