@@ -23,18 +23,19 @@ class PulaPula:
         return self.caixa
 
     def getConta(self, nome):
-        if nome in self.conta:
-            return self.conta[nome]
-        else:
-            return None
+        for i in self.conta.keys():
+            if nome == i.getNome():
+                return self.conta[i]
+        return None
 
 
     def entrarNaFila(self, crianca: Crianca):
-        if crianca.getNome() in self.filaespera:
-            return False
-        else:
-            self.filaespera.append(crianca.getNome())
-            return True
+        for i in range(len(self.filaespera)):
+            if crianca.getNome() in self.filaespera[i].getNome():
+                return False
+        self.filaespera.append(crianca)
+        return True
+
 
     def entrar(self):
         if len(self.filaespera) > 0:
@@ -60,21 +61,22 @@ class PulaPula:
         return False
 
     def papaiChegou(self, nome):
-        conta = 0
-        if nome in self.criancadentro:
-            self.criancadentro.pop(self.criancadentro.index(nome))
-            for chaves in self.conta:
-                if chaves == nome:
-                    conta = self.conta[chaves]
-            self.caixa += conta
-            return True
-        if nome in self.filaespera:
-            self.filaespera.pop(self.filaespera.index(nome))
-            for chaves in self.conta:
-                if chaves == nome:
-                    conta = self.conta[chaves]
-            self.caixa += conta
-            return True
+        for i in range(len(self.criancadentro)):
+            if nome == self.criancadentro[i].getNome():
+                for chaves in self.conta:
+                    if chaves.getNome() == nome:
+                        conta = self.conta[chaves]
+                        self.caixa += conta
+                self.criancadentro.pop(i)
+                return True
+        for e in range(len(self.filaespera)):
+            if nome == self.filaespera[e].getNome():
+                for chaves in self.conta:
+                    if chaves.getNome() == nome:
+                        conta2 = self.conta[chaves]
+                        self.caixa += conta2
+                self.filaespera.pop(e)
+                return True
         return False
 
     def fechar(self):
